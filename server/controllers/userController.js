@@ -18,5 +18,17 @@ module.exports = {
       console.log(name)
       res.json(name);
     })
+  },
+
+  delete: (req, res) => {
+    User.remove({_id: req.params.id}, (err) => {
+      res.json("delete success from server")
+    })
+  },
+
+  edit: (req, res) => {
+    User.findByIdAndUpdate(req.params.id, {$set: {name: req.params.name}}, (err) => {
+      res.json("edit success")
+    })
   }
 }

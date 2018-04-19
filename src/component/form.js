@@ -11,6 +11,12 @@ export default class Form extends React.Component {
     }
   }
 
+  
+  componentWillMount() {
+    this.props.match.params.name ? this.setState(() => ({ name: this.props.match.params.name})) : false
+  }
+  
+
   nameChange = (e) => {
     const name = e.target.value;
     this.setState(() => ({name}));
@@ -25,6 +31,11 @@ export default class Form extends React.Component {
       this.setState(() => ({ error: true }))
       if (this.props.add) {
         http.addName(this.state.name);
+      }
+      else if(this.props.edit) {
+        http.editName(this.state.name, this.props.match.params.id).then((res) => {
+          console.log(res);
+        });
       }
       this.props.history.push("/");
     }

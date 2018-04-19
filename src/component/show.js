@@ -14,11 +14,19 @@ class Show extends React.Component {
   componentWillMount() {
     http.getAllName()
       .then((res) => {
+        // console.log(res.data);
         this.props.dispatch(getAllName(res.data));
       })
       .catch((err) => {
         console.log('err: ', err);
       })
+  }
+
+  delete = (id) => {
+    http.delete(id).then((res) => {
+      this.componentWillMount();
+    });
+    
   }
 
   newRow = (props) => {
@@ -28,8 +36,8 @@ class Show extends React.Component {
           <tr key={i}>
             <td>{name.name}</td>
             <td>
-              <button>Edit</button>
-              <button>Delete</button>
+              <button><Link to = {`/edit/${name._id}/${name.name}`}>Edit</Link></button>
+              <button onClick = {this.delete.bind(this, name._id)}>Delete</button>
             </td>
           </tr>
         )
